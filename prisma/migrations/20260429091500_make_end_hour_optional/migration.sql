@@ -1,0 +1,2 @@
+ALTER TABLE "DailyWorkTime"
+ALTER COLUMN "end_hour" DROP NOT NULL;
