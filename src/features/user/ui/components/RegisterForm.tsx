@@ -1,5 +1,7 @@
 "use client";
 
+import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
 import { useRegister } from "../hooks/useRegister";
 
@@ -27,19 +29,36 @@ export function RegisterForm() {
     };
 
     return (
-        <main className="flex min-h-screen items-center justify-center">
-            <div className="w-full max-w-sm rounded-xl border p-8 shadow-md">
-                <h1 className="mb-6 text-2xl font-bold">Create account</h1>
+        <main className="flex min-h-screen items-center justify-center px-4 py-8">
+            <div className="w-full max-w-md rounded-[28px] border border-[var(--brand-line)] bg-[linear-gradient(180deg,rgba(255,255,255,0.97),rgba(237,244,233,0.96))] p-6 shadow-[0_20px_50px_rgba(36,89,47,0.12)] sm:p-8">
+                <div className="mb-6 flex items-center gap-4">
+                    <Image
+                        src="/logo.svg"
+                        alt="Time Tracker logo"
+                        width={56}
+                        height={56}
+                        className="h-14 w-14 rounded-2xl"
+                        priority
+                    />
+                    <div>
+                        <p className="text-sm font-medium uppercase tracking-[0.2em] text-[var(--brand)]">
+                            Time Tracker
+                        </p>
+                        <h1 className="mt-1 text-2xl font-bold tracking-tight text-[var(--brand-deep)]">
+                            Create account
+                        </h1>
+                    </div>
+                </div>
 
                 {error && (
-                    <div className="mb-4 rounded-md bg-red-50 p-3 text-sm text-red-700">
+                    <div className="mb-4 rounded-2xl bg-[var(--danger-soft)] p-3 text-sm text-[var(--danger-strong)]">
                         {error}
                     </div>
                 )}
 
                 <form onSubmit={handleSubmit} className="flex flex-col gap-4">
                     <div className="flex flex-col gap-1">
-                        <label htmlFor="username" className="text-sm font-medium">
+                        <label htmlFor="username" className="text-sm font-medium text-[var(--brand-deep)]">
                             Username
                         </label>
                         <input
@@ -50,12 +69,12 @@ export function RegisterForm() {
                             onChange={handleChange}
                             required
                             disabled={isLoading}
-                            className="rounded-md border px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-black disabled:opacity-50"
+                            className="rounded-2xl border border-[var(--brand-line)] bg-white px-3 py-3 text-sm text-[var(--brand-deep)] outline-none focus:ring-2 focus:ring-[var(--brand)] disabled:opacity-50"
                         />
                     </div>
 
                     <div className="flex flex-col gap-1">
-                        <label htmlFor="email" className="text-sm font-medium">
+                        <label htmlFor="email" className="text-sm font-medium text-[var(--brand-deep)]">
                             Email
                         </label>
                         <input
@@ -66,12 +85,12 @@ export function RegisterForm() {
                             onChange={handleChange}
                             required
                             disabled={isLoading}
-                            className="rounded-md border px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-black disabled:opacity-50"
+                            className="rounded-2xl border border-[var(--brand-line)] bg-white px-3 py-3 text-sm text-[var(--brand-deep)] outline-none focus:ring-2 focus:ring-[var(--brand)] disabled:opacity-50"
                         />
                     </div>
 
                     <div className="flex flex-col gap-1">
-                        <label htmlFor="password" className="text-sm font-medium">
+                        <label htmlFor="password" className="text-sm font-medium text-[var(--brand-deep)]">
                             Password
                         </label>
                         <input
@@ -82,13 +101,13 @@ export function RegisterForm() {
                             onChange={handleChange}
                             required
                             disabled={isLoading}
-                            className="rounded-md border px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-black disabled:opacity-50"
+                            className="rounded-2xl border border-[var(--brand-line)] bg-white px-3 py-3 text-sm text-[var(--brand-deep)] outline-none focus:ring-2 focus:ring-[var(--brand)] disabled:opacity-50"
                         />
-                        <p className="text-xs text-gray-500">Minimum 8 characters</p>
+                        <p className="text-xs text-[color:rgba(25,52,31,0.6)]">Minimum 8 characters</p>
                     </div>
 
                     <div className="flex flex-col gap-1">
-                        <label htmlFor="confirmPassword" className="text-sm font-medium">
+                        <label htmlFor="confirmPassword" className="text-sm font-medium text-[var(--brand-deep)]">
                             Confirm Password
                         </label>
                         <input
@@ -99,24 +118,24 @@ export function RegisterForm() {
                             onChange={handleChange}
                             required
                             disabled={isLoading}
-                            className="rounded-md border px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-black disabled:opacity-50"
+                            className="rounded-2xl border border-[var(--brand-line)] bg-white px-3 py-3 text-sm text-[var(--brand-deep)] outline-none focus:ring-2 focus:ring-[var(--brand)] disabled:opacity-50"
                         />
                     </div>
 
                     <button
                         type="submit"
                         disabled={isLoading}
-                        className="rounded-md bg-black py-2 text-sm font-medium text-white transition-opacity hover:opacity-90 disabled:opacity-50"
+                        className="rounded-2xl bg-[var(--brand)] py-3 text-sm font-medium text-white transition-colors hover:bg-[var(--brand-deep)] disabled:opacity-50"
                     >
                         {isLoading ? "Creating account..." : "Create account"}
                     </button>
                 </form>
 
-                <p className="mt-4 text-center text-sm text-gray-600">
+                <p className="mt-5 text-center text-sm text-[color:rgba(25,52,31,0.72)]">
                     Already have an account?{" "}
-                    <a href="/user/login" className="font-medium text-black hover:underline">
+                    <Link href="/user/login" className="font-medium text-[var(--brand)] hover:underline">
                         Sign in
-                    </a>
+                    </Link>
                 </p>
             </div>
         </main>

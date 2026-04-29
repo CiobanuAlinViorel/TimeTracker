@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { signOut } from "@/lib/auth";
 
@@ -38,20 +39,33 @@ export function AppShell({
   children,
 }: AppShellProps) {
   return (
-    <div className="min-h-screen bg-zinc-50 dark:bg-black">
-      <header className="border-b bg-white dark:bg-black">
-        <div className="mx-auto flex max-w-7xl flex-col gap-4 px-4 py-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen text-[var(--foreground)]">
+      <header className="sticky top-0 z-20 border-b border-[var(--brand-line)]/80 bg-[color:rgba(244,247,242,0.92)] backdrop-blur">
+        <div className="mx-auto flex max-w-7xl flex-col gap-4 px-4 py-3 sm:px-6 lg:px-8">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-            <div>
-              <h1 className="text-xl font-semibold text-black dark:text-white">
-                Time Tracker
-              </h1>
-              <p className="text-sm text-gray-600 dark:text-gray-400">
-                Welcome, {session.user?.name || session.user?.email}
-              </p>
-            </div>
+            <Link
+              href="/"
+              className="flex items-center gap-3 rounded-2xl focus:outline-none focus:ring-2 focus:ring-[var(--brand)]"
+            >
+              <Image
+                src="/logo.svg"
+                alt="Time Tracker logo"
+                width={48}
+                height={48}
+                className="h-12 w-12 rounded-2xl shadow-sm"
+                priority
+              />
+              <div className="min-w-0">
+                <h1 className="text-lg font-semibold tracking-tight text-[var(--brand-deep)] sm:text-xl">
+                  Time Tracker
+                </h1>
+                <p className="truncate text-sm text-[color:rgba(25,52,31,0.72)]">
+                  Welcome, {session.user?.name || session.user?.email}
+                </p>
+              </div>
+            </Link>
 
-            <form
+            <form className="w-full sm:w-auto"
               action={async () => {
                 "use server";
                 await signOut({ redirectTo: "/user/login" });
@@ -59,14 +73,14 @@ export function AppShell({
             >
               <button
                 type="submit"
-                className="rounded-md bg-black px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200"
+                className="w-full rounded-2xl bg-[var(--brand)] px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-[var(--brand-deep)] sm:w-auto"
               >
                 Sign out
               </button>
             </form>
           </div>
 
-          <nav className="flex flex-wrap gap-2">
+          <nav className="grid grid-cols-1 gap-2 sm:grid-cols-3 lg:flex lg:flex-wrap">
             {navigationItems.map((item) => {
               const active = isCurrentPath(currentPath, item.href);
 
@@ -74,10 +88,10 @@ export function AppShell({
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`rounded-full px-4 py-2 text-sm font-medium transition-colors ${
+                  className={`rounded-2xl px-4 py-3 text-sm font-medium transition-colors ${
                     active
-                      ? "bg-black text-white dark:bg-white dark:text-black"
-                      : "bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-zinc-900 dark:text-gray-200 dark:hover:bg-zinc-800"
+                      ? "bg-[var(--brand)] text-white shadow-sm"
+                      : "bg-[var(--surface-strong)] text-[var(--brand-deep)] ring-1 ring-[var(--brand-line)] hover:bg-[var(--brand-wash)]"
                   }`}
                 >
                   {item.label}
@@ -88,12 +102,27 @@ export function AppShell({
         </div>
       </header>
 
-      <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-        <div className="mb-6 rounded-lg border bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-black">
-          <h2 className="mb-2 text-2xl font-bold text-black dark:text-white">
-            {title}
-          </h2>
-          <p className="text-gray-600 dark:text-gray-400">{description}</p>
+      <main className="mx-auto max-w-7xl px-4 py-5 sm:px-6 sm:py-8 lg:px-8">
+        <div className="mb-5 overflow-hidden rounded-[28px] border border-[var(--brand-line)] bg-[linear-gradient(135deg,rgba(255,255,255,0.92),rgba(237,244,233,0.96))] p-5 shadow-[0_18px_50px_rgba(36,89,47,0.08)] sm:mb-6 sm:p-6">
+          <div className="flex items-start gap-4">
+            <div className="hidden rounded-2xl bg-[var(--brand-soft)] p-3 sm:block">
+              <Image
+                src="/logo.svg"
+                alt=""
+                width={44}
+                height={44}
+                className="h-11 w-11"
+              />
+            </div>
+            <div>
+              <h2 className="mb-2 text-2xl font-bold tracking-tight text-[var(--brand-deep)]">
+                {title}
+              </h2>
+              <p className="max-w-3xl text-sm leading-6 text-[color:rgba(25,52,31,0.76)] sm:text-base">
+                {description}
+              </p>
+            </div>
+          </div>
         </div>
 
         {children}

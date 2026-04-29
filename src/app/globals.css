@@ -1,26 +1,50 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f4f7f2;
+  --foreground: #19341f;
+  --surface: #fbfdf9;
+  --surface-strong: #ffffff;
+  --brand: #24592f;
+  --brand-deep: #193f22;
+  --brand-soft: #dde8d8;
+  --brand-line: #c8d8c1;
+  --brand-wash: #edf4e9;
+  --danger-soft: #fce8e6;
+  --danger-strong: #b93a32;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-surface-strong: var(--surface-strong);
+  --color-brand: var(--brand);
+  --color-brand-deep: var(--brand-deep);
+  --color-brand-soft: var(--brand-soft);
+  --color-brand-line: var(--brand-line);
+  --color-brand-wash: var(--brand-wash);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+body {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top left, rgba(221, 232, 216, 0.9), transparent 34%),
+    linear-gradient(180deg, #f8fbf6 0%, #f4f7f2 42%, #eef4ea 100%);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), sans-serif;
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+a,
+button,
+input,
+textarea,
+select {
+  -webkit-tap-highlight-color: transparent;
+}
+
+::selection {
+  background: rgba(36, 89, 47, 0.16);
 }

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { AppShell } from "@/components/app-shell";
 import { WorkEntryList } from "@/components/work-entry-list";
 import { auth } from "@/lib/auth";
@@ -13,26 +14,26 @@ function getSummaryCardClasses(isOnTarget: boolean | null) {
   if (isOnTarget === null) {
     return {
       container:
-        "rounded-lg border bg-white p-5 shadow-sm dark:border-gray-800 dark:bg-black",
-      value: "mt-2 text-3xl font-bold text-black dark:text-white",
-      meta: "mt-2 text-sm text-gray-600 dark:text-gray-400",
+        "rounded-[26px] border border-[var(--brand-line)] bg-[var(--surface-strong)] p-5 shadow-sm",
+      value: "mt-3 text-3xl font-bold tracking-tight text-[var(--brand-deep)]",
+      meta: "mt-2 text-sm text-[color:rgba(25,52,31,0.66)]",
     };
   }
 
   if (isOnTarget) {
     return {
       container:
-        "rounded-lg border border-green-200 bg-green-50 p-5 shadow-sm dark:border-green-900 dark:bg-green-950/30",
-      value: "mt-2 text-3xl font-bold text-green-700 dark:text-green-300",
-      meta: "mt-2 text-sm text-green-700 dark:text-green-300",
+        "rounded-[26px] border border-[var(--brand-line)] bg-[linear-gradient(180deg,rgba(237,244,233,0.96),rgba(255,255,255,0.98))] p-5 shadow-sm",
+      value: "mt-3 text-3xl font-bold tracking-tight text-[var(--brand)]",
+      meta: "mt-2 text-sm text-[var(--brand)]",
     };
   }
 
   return {
     container:
-      "rounded-lg border border-red-200 bg-red-50 p-5 shadow-sm dark:border-red-900 dark:bg-red-950/30",
-    value: "mt-2 text-3xl font-bold text-red-700 dark:text-red-300",
-    meta: "mt-2 text-sm text-red-700 dark:text-red-300",
+      "rounded-[26px] border border-[#efcdc9] bg-[linear-gradient(180deg,rgba(252,232,230,0.92),rgba(255,255,255,0.98))] p-5 shadow-sm",
+    value: "mt-3 text-3xl font-bold tracking-tight text-[#b93a32]",
+    meta: "mt-2 text-sm text-[#b93a32]",
   };
 }
 
@@ -56,9 +57,9 @@ export default async function Home() {
       description="Track finished intervals manually or start a session now and finish it later."
     >
       <div className="grid gap-6">
-        <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+        <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
           <div className={todayCard.container}>
-            <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400">
+            <h3 className="text-sm font-medium text-[color:rgba(25,52,31,0.62)]">
               Today's Hours
             </h3>
             <p className={todayCard.value}>
@@ -71,7 +72,7 @@ export default async function Home() {
             </p>
           </div>
           <div className={weekCard.container}>
-            <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400">
+            <h3 className="text-sm font-medium text-[color:rgba(25,52,31,0.62)]">
               This Week
             </h3>
             <p className={weekCard.value}>
@@ -82,7 +83,7 @@ export default async function Home() {
             </p>
           </div>
           <div className={monthCard.container}>
-            <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400">
+            <h3 className="text-sm font-medium text-[color:rgba(25,52,31,0.62)]">
               Current Month (15-14)
             </h3>
             <p className={monthCard.value}>
@@ -92,16 +93,16 @@ export default async function Home() {
               Target to date: {formatHoursLabel(summaries.month.target ?? 0)}
             </p>
           </div>
-          <div className="rounded-lg border bg-white p-5 shadow-sm dark:border-gray-800 dark:bg-black">
-            <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400">
+          <div className="rounded-[26px] border border-[var(--brand-line)] bg-[var(--surface-strong)] p-5 shadow-sm">
+            <h3 className="text-sm font-medium text-[color:rgba(25,52,31,0.62)]">
               Active Session
             </h3>
-            <p className="mt-2 text-lg font-semibold text-black dark:text-white">
+            <p className="mt-3 text-lg font-semibold text-[var(--brand-deep)]">
               {activeEntry
                 ? `Started ${formatDateTimeLabel(activeEntry.start_hour)}`
                 : "No active session"}
             </p>
-            <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
+            <p className="mt-2 text-sm text-[color:rgba(25,52,31,0.66)]">
               {activeEntry
                 ? `Day: ${formatDateLabel(activeEntry.date)}`
                 : "You can start one from the Start / Finish page."}
@@ -111,7 +112,7 @@ export default async function Home() {
 
         <section className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_minmax(320px,360px)]">
           <div>
-            <h3 className="mb-4 text-lg font-semibold text-black dark:text-white">
+            <h3 className="mb-4 text-lg font-semibold text-[var(--brand-deep)]">
               Recent Entries
             </h3>
             <WorkEntryList
@@ -120,30 +121,30 @@ export default async function Home() {
             />
           </div>
 
-          <div className="rounded-lg border bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-black">
-            <h3 className="text-lg font-semibold text-black dark:text-white">
+          <div className="rounded-[28px] border border-[var(--brand-line)] bg-[linear-gradient(180deg,rgba(255,255,255,0.96),rgba(237,244,233,0.96))] p-5 shadow-sm sm:p-6">
+            <h3 className="text-lg font-semibold text-[var(--brand-deep)]">
               Quick Actions
             </h3>
             <div className="mt-4 grid gap-4">
-              <a
+              <Link
                 href="/entries/manual"
-                className="rounded-lg border p-4 transition-colors hover:bg-gray-50 dark:border-gray-800 dark:hover:bg-zinc-950"
+                className="rounded-[24px] border border-[var(--brand-line)] bg-[var(--surface-strong)] p-4 transition-colors hover:bg-[var(--brand-wash)]"
               >
-                <p className="font-medium text-black dark:text-white">Manual entry</p>
-                <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
+                <p className="font-medium text-[var(--brand-deep)]">Manual entry</p>
+                <p className="mt-1 text-sm text-[color:rgba(25,52,31,0.7)]">
                   Add a completed interval with day, start hour, and end hour.
                 </p>
-              </a>
+              </Link>
 
-              <a
+              <Link
                 href="/entries/live"
-                className="rounded-lg border p-4 transition-colors hover:bg-gray-50 dark:border-gray-800 dark:hover:bg-zinc-950"
+                className="rounded-[24px] border border-[var(--brand-line)] bg-[var(--surface-strong)] p-4 transition-colors hover:bg-[var(--brand-wash)]"
               >
-                <p className="font-medium text-black dark:text-white">Start / Finish</p>
-                <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
+                <p className="font-medium text-[var(--brand-deep)]">Start / Finish</p>
+                <p className="mt-1 text-sm text-[color:rgba(25,52,31,0.7)]">
                   Start with a start hour now, then come back later to finish it.
                 </p>
-              </a>
+              </Link>
             </div>
           </div>
         </section>
