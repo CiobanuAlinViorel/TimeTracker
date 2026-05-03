@@ -21,6 +21,7 @@ const navigationItems = [
   { href: "/", label: "Dashboard" },
   { href: "/entries/manual", label: "Manual Entry" },
   { href: "/entries/live", label: "Start / Finish" },
+  { href: "/exports", label: "Exports" },
 ];
 
 function isCurrentPath(currentPath: string, href: string) {
@@ -80,7 +81,7 @@ export function AppShell({
             </form>
           </div>
 
-          <nav className="grid grid-cols-1 gap-2 sm:grid-cols-3 lg:flex lg:flex-wrap">
+          <nav className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-4">
             {navigationItems.map((item) => {
               const active = isCurrentPath(currentPath, item.href);
 

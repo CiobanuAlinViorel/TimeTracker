@@ -5,7 +5,6 @@ import { WorkEntryList } from "@/components/work-entry-list";
 import {
   createManualEntry,
   formatDateInputValue,
-  formatTimeInputValue,
   getFeedbackMessage,
   getManualEntryPageData,
 } from "@/features/time-entries/server";

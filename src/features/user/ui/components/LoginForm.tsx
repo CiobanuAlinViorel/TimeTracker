@@ -3,7 +3,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import { useLogin } from "../hooks/useLogin";
 
 export function LoginForm() {
@@ -13,7 +12,6 @@ export function LoginForm() {
     });
 
     const { login, error, isLoading } = useLogin();
-    const router = useRouter();
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -99,7 +97,7 @@ export function LoginForm() {
                 </form>
 
                 <p className="mt-5 text-center text-sm text-[color:rgba(25,52,31,0.72)]">
-                    Don't have an account?{" "}
+                    Don&apos;t have an account?{" "}
                     <Link href="/user/register" className="font-medium text-[var(--brand)] hover:underline">
                         Create one
                     </Link>

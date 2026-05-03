@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { AppShell } from "@/components/app-shell";
 import { WorkEntryList } from "@/components/work-entry-list";
+import { ensureAutomaticWeeklyWorkbookExport } from "@/features/exports/server";
 import { auth } from "@/lib/auth";
 import {
   formatDateLabel,
@@ -44,6 +45,7 @@ export default async function Home() {
     redirect("/user/login");
   }
 
+  await ensureAutomaticWeeklyWorkbookExport();
   const { activeEntry, recentEntries, summaries } = await getDashboardData();
   const todayCard = getSummaryCardClasses(summaries.today.isOnTarget);
   const weekCard = getSummaryCardClasses(summaries.week.isOnTarget);
@@ -60,7 +62,7 @@ export default async function Home() {
         <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
           <div className={todayCard.container}>
             <h3 className="text-sm font-medium text-[color:rgba(25,52,31,0.62)]">
-              Today's Hours
+              Today&apos;s Hours
             </h3>
             <p className={todayCard.value}>
               {formatHoursLabel(summaries.today.actual)}
@@ -143,6 +145,16 @@ export default async function Home() {
                 <p className="font-medium text-[var(--brand-deep)]">Start / Finish</p>
                 <p className="mt-1 text-sm text-[color:rgba(25,52,31,0.7)]">
                   Start with a start hour now, then come back later to finish it.
+                </p>
+              </Link>
+
+              <Link
+                href="/exports"
+                className="rounded-[24px] border border-[var(--brand-line)] bg-[var(--surface-strong)] p-4 transition-colors hover:bg-[var(--brand-wash)]"
+              >
+                <p className="font-medium text-[var(--brand-deep)]">Exports</p>
+                <p className="mt-1 text-sm text-[color:rgba(25,52,31,0.7)]">
+                  Save the latest finished week or the current 15-14 situation to Excel.
                 </p>
               </Link>
             </div>
