@@ -1,48 +1,29 @@
-import fs from "node:fs/promises";
-import path from "node:path";
 import { auth } from "@/lib/auth";
-import prisma from "@/lib/prisma";
+import { generateReportXlsx } from "@/features/exports/server";
 
 export const runtime = "nodejs";
 
-const WORKBOOK_FILE_NAME = "results.xlsx";
-
-function getResultsWorkbookPath(userId: string) {
-  return path.join(process.cwd(), "data", "exports", userId, WORKBOOK_FILE_NAME);
-}
-
-export async function GET() {
+export async function GET(request: Request) {
   const session = await auth();
-  const email = session?.user?.email;
 
-  if (!email) {
+  if (!session?.user?.email) {
     return new Response("Unauthorized", { status: 401 });
   }
 
-  const user = await prisma.user.findUnique({
-    where: { email },
-    select: {
-      id: true,
+  const { searchParams } = new URL(request.url);
+  const type = searchParams.get("type");
+
+  if (type !== "latest-week" && type !== "current-period") {
+    return new Response("Invalid type", { status: 400 });
+  }
+
+  const { data, sheetName } = await generateReportXlsx(type);
+
+  return new Response(data, {
+    headers: {
+      "Content-Type":
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "Content-Disposition": `attachment; filename="${sheetName}.xlsx"`,
     },
   });
-
-  if (!user) {
-    return new Response("Unauthorized", { status: 401 });
-  }
-
-  const workbookPath = getResultsWorkbookPath(user.id);
-
-  try {
-    const fileBuffer = await fs.readFile(workbookPath);
-
-    return new Response(fileBuffer, {
-      headers: {
-        "Content-Type":
-          "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-        "Content-Disposition": `attachment; filename="${WORKBOOK_FILE_NAME}"`,
-      },
-    });
-  } catch {
-    return new Response("Workbook not found", { status: 404 });
-  }
 }

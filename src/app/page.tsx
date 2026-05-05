@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { AppShell } from "@/components/app-shell";
 import { WorkEntryList } from "@/components/work-entry-list";
-import { ensureAutomaticWeeklyWorkbookExport } from "@/features/exports/server";
 import { auth } from "@/lib/auth";
 import {
   formatDateLabel,
@@ -45,7 +44,6 @@ export default async function Home() {
     redirect("/user/login");
   }
 
-  await ensureAutomaticWeeklyWorkbookExport();
   const { activeEntry, recentEntries, summaries } = await getDashboardData();
   const todayCard = getSummaryCardClasses(summaries.today.isOnTarget);
   const weekCard = getSummaryCardClasses(summaries.week.isOnTarget);
