@@ -19,7 +19,7 @@ export async function GET(request: Request) {
 
   const { data, sheetName } = await generateReportXlsx(type);
 
-  return new Response(data, {
+  return new Response(new Uint8Array(data), {
     headers: {
       "Content-Type":
         "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",

@@ -225,7 +225,7 @@ export async function getExportsPageData() {
 
 export async function generateReportXlsx(
   type: "latest-week" | "current-period"
-): Promise<{ data: ArrayBuffer; sheetName: string }> {
+): Promise<{ data: Buffer; sheetName: string }> {
   const user = await getCurrentUser();
   const reportType: ReportType = type === "latest-week" ? "Weekly" : "Period";
   const range =
@@ -234,8 +234,7 @@ export async function generateReportXlsx(
   const { sheetName, worksheet } = await buildReportWorksheet(user, reportType, range);
   const workbook = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(workbook, worksheet, sheetName);
-  const uint8 = XLSX.write(workbook, { bookType: "xlsx", type: "array" }) as Uint8Array;
-  const data = uint8.buffer.slice(uint8.byteOffset, uint8.byteOffset + uint8.byteLength) as ArrayBuffer;
+  const data = XLSX.write(workbook, { bookType: "xlsx", type: "buffer" }) as Buffer;
 
   return { data, sheetName };
 }
